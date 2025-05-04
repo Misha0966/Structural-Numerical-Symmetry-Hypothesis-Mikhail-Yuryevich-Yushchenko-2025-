@@ -1,0 +1,1 @@
+# Structural-Numerical-Symmetry-Hypothesis-Mikhail-Yuryevich-Yushchenko-2025-
