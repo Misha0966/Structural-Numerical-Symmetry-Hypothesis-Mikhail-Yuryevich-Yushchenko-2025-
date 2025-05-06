@@ -1,0 +1,92 @@
+N,m,k,parts,multiplied_parts,PQ,NK,result
+10,2,7,"BigInt[1, 0]","BigInt[7, 0]",70,70,✅ Full Match
+11,2,7,"BigInt[1, 1]","BigInt[7, 7]",77,77,✅ Full Match
+12,2,7,"BigInt[1, 2]","BigInt[7, 14]",714,84,🔄 End Match
+13,2,7,"BigInt[1, 3]","BigInt[7, 21]",721,91,🔄 End Match
+14,2,7,"BigInt[1, 4]","BigInt[7, 28]",728,98,🔄 End Match
+15,2,7,"BigInt[1, 5]","BigInt[7, 35]",735,105,🔄 End Match
+16,2,7,"BigInt[1, 6]","BigInt[7, 42]",742,112,🔄 End Match
+17,2,7,"BigInt[1, 7]","BigInt[7, 49]",749,119,🔄 End Match
+18,2,7,"BigInt[1, 8]","BigInt[7, 56]",756,126,🔄 End Match
+19,2,7,"BigInt[1, 9]","BigInt[7, 63]",763,133,🔄 End Match
+20,2,7,"BigInt[2, 0]","BigInt[14, 0]",140,140,✅ Full Match
+21,2,7,"BigInt[2, 1]","BigInt[14, 7]",147,147,✅ Full Match
+22,2,7,"BigInt[2, 2]","BigInt[14, 14]",1414,154,🔄 Start and End Match
+23,2,7,"BigInt[2, 3]","BigInt[14, 21]",1421,161,🔄 Start and End Match
+24,2,7,"BigInt[2, 4]","BigInt[14, 28]",1428,168,🔄 Start and End Match
+25,2,7,"BigInt[2, 5]","BigInt[14, 35]",1435,175,🔄 Start and End Match
+26,2,7,"BigInt[2, 6]","BigInt[14, 42]",1442,182,🔄 Start and End Match
+27,2,7,"BigInt[2, 7]","BigInt[14, 49]",1449,189,🔄 Start and End Match
+28,2,7,"BigInt[2, 8]","BigInt[14, 56]",1456,196,🔄 Start and End Match
+29,2,7,"BigInt[2, 9]","BigInt[14, 63]",1463,203,🔄 End Match
+30,2,7,"BigInt[3, 0]","BigInt[21, 0]",210,210,✅ Full Match
+31,2,7,"BigInt[3, 1]","BigInt[21, 7]",217,217,✅ Full Match
+32,2,7,"BigInt[3, 2]","BigInt[21, 14]",2114,224,🔄 Start and End Match
+33,2,7,"BigInt[3, 3]","BigInt[21, 21]",2121,231,🔄 Start and End Match
+34,2,7,"BigInt[3, 4]","BigInt[21, 28]",2128,238,🔄 Start and End Match
+35,2,7,"BigInt[3, 5]","BigInt[21, 35]",2135,245,🔄 Start and End Match
+36,2,7,"BigInt[3, 6]","BigInt[21, 42]",2142,252,🔄 Start and End Match
+37,2,7,"BigInt[3, 7]","BigInt[21, 49]",2149,259,🔄 Start and End Match
+38,2,7,"BigInt[3, 8]","BigInt[21, 56]",2156,266,🔄 Start and End Match
+39,2,7,"BigInt[3, 9]","BigInt[21, 63]",2163,273,🔄 Start and End Match
+40,2,7,"BigInt[4, 0]","BigInt[28, 0]",280,280,✅ Full Match
+41,2,7,"BigInt[4, 1]","BigInt[28, 7]",287,287,✅ Full Match
+42,2,7,"BigInt[4, 2]","BigInt[28, 14]",2814,294,🔄 Start and End Match
+43,2,7,"BigInt[4, 3]","BigInt[28, 21]",2821,301,🔄 End Match
+44,2,7,"BigInt[4, 4]","BigInt[28, 28]",2828,308,🔄 End Match
+45,2,7,"BigInt[4, 5]","BigInt[28, 35]",2835,315,🔄 End Match
+46,2,7,"BigInt[4, 6]","BigInt[28, 42]",2842,322,🔄 End Match
+47,2,7,"BigInt[4, 7]","BigInt[28, 49]",2849,329,🔄 End Match
+48,2,7,"BigInt[4, 8]","BigInt[28, 56]",2856,336,🔄 End Match
+49,2,7,"BigInt[4, 9]","BigInt[28, 63]",2863,343,🔄 End Match
+50,2,7,"BigInt[5, 0]","BigInt[35, 0]",350,350,✅ Full Match
+51,2,7,"BigInt[5, 1]","BigInt[35, 7]",357,357,✅ Full Match
+52,2,7,"BigInt[5, 2]","BigInt[35, 14]",3514,364,🔄 Start and End Match
+53,2,7,"BigInt[5, 3]","BigInt[35, 21]",3521,371,🔄 Start and End Match
+54,2,7,"BigInt[5, 4]","BigInt[35, 28]",3528,378,🔄 Start and End Match
+55,2,7,"BigInt[5, 5]","BigInt[35, 35]",3535,385,🔄 Start and End Match
+56,2,7,"BigInt[5, 6]","BigInt[35, 42]",3542,392,🔄 Start and End Match
+57,2,7,"BigInt[5, 7]","BigInt[35, 49]",3549,399,🔄 Start and End Match
+58,2,7,"BigInt[5, 8]","BigInt[35, 56]",3556,406,🔄 End Match
+59,2,7,"BigInt[5, 9]","BigInt[35, 63]",3563,413,🔄 End Match
+60,2,7,"BigInt[6, 0]","BigInt[42, 0]",420,420,✅ Full Match
+61,2,7,"BigInt[6, 1]","BigInt[42, 7]",427,427,✅ Full Match
+62,2,7,"BigInt[6, 2]","BigInt[42, 14]",4214,434,🔄 Start and End Match
+63,2,7,"BigInt[6, 3]","BigInt[42, 21]",4221,441,🔄 Start and End Match
+64,2,7,"BigInt[6, 4]","BigInt[42, 28]",4228,448,🔄 Start and End Match
+65,2,7,"BigInt[6, 5]","BigInt[42, 35]",4235,455,🔄 Start and End Match
+66,2,7,"BigInt[6, 6]","BigInt[42, 42]",4242,462,🔄 Start and End Match
+67,2,7,"BigInt[6, 7]","BigInt[42, 49]",4249,469,🔄 Start and End Match
+68,2,7,"BigInt[6, 8]","BigInt[42, 56]",4256,476,🔄 Start and End Match
+69,2,7,"BigInt[6, 9]","BigInt[42, 63]",4263,483,🔄 Start and End Match
+70,2,7,"BigInt[7, 0]","BigInt[49, 0]",490,490,✅ Full Match
+71,2,7,"BigInt[7, 1]","BigInt[49, 7]",497,497,✅ Full Match
+72,2,7,"BigInt[7, 2]","BigInt[49, 14]",4914,504,🔄 End Match
+73,2,7,"BigInt[7, 3]","BigInt[49, 21]",4921,511,🔄 End Match
+74,2,7,"BigInt[7, 4]","BigInt[49, 28]",4928,518,🔄 End Match
+75,2,7,"BigInt[7, 5]","BigInt[49, 35]",4935,525,🔄 End Match
+76,2,7,"BigInt[7, 6]","BigInt[49, 42]",4942,532,🔄 End Match
+77,2,7,"BigInt[7, 7]","BigInt[49, 49]",4949,539,🔄 End Match
+78,2,7,"BigInt[7, 8]","BigInt[49, 56]",4956,546,🔄 End Match
+79,2,7,"BigInt[7, 9]","BigInt[49, 63]",4963,553,🔄 End Match
+80,2,7,"BigInt[8, 0]","BigInt[56, 0]",560,560,✅ Full Match
+81,2,7,"BigInt[8, 1]","BigInt[56, 7]",567,567,✅ Full Match
+82,2,7,"BigInt[8, 2]","BigInt[56, 14]",5614,574,🔄 Start and End Match
+83,2,7,"BigInt[8, 3]","BigInt[56, 21]",5621,581,🔄 Start and End Match
+84,2,7,"BigInt[8, 4]","BigInt[56, 28]",5628,588,🔄 Start and End Match
+85,2,7,"BigInt[8, 5]","BigInt[56, 35]",5635,595,🔄 Start and End Match
+86,2,7,"BigInt[8, 6]","BigInt[56, 42]",5642,602,🔄 End Match
+87,2,7,"BigInt[8, 7]","BigInt[56, 49]",5649,609,🔄 End Match
+88,2,7,"BigInt[8, 8]","BigInt[56, 56]",5656,616,🔄 End Match
+89,2,7,"BigInt[8, 9]","BigInt[56, 63]",5663,623,🔄 End Match
+90,2,7,"BigInt[9, 0]","BigInt[63, 0]",630,630,✅ Full Match
+91,2,7,"BigInt[9, 1]","BigInt[63, 7]",637,637,✅ Full Match
+92,2,7,"BigInt[9, 2]","BigInt[63, 14]",6314,644,🔄 Start and End Match
+93,2,7,"BigInt[9, 3]","BigInt[63, 21]",6321,651,🔄 Start and End Match
+94,2,7,"BigInt[9, 4]","BigInt[63, 28]",6328,658,🔄 Start and End Match
+95,2,7,"BigInt[9, 5]","BigInt[63, 35]",6335,665,🔄 Start and End Match
+96,2,7,"BigInt[9, 6]","BigInt[63, 42]",6342,672,🔄 Start and End Match
+97,2,7,"BigInt[9, 7]","BigInt[63, 49]",6349,679,🔄 Start and End Match
+98,2,7,"BigInt[9, 8]","BigInt[63, 56]",6356,686,🔄 Start and End Match
+99,2,7,"BigInt[9, 9]","BigInt[63, 63]",6363,693,🔄 Start and End Match
+100,2,7,"BigInt[10, 0]","BigInt[70, 0]",700,700,✅ Full Match
