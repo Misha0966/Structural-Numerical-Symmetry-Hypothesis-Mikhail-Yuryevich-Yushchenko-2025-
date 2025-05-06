@@ -1,267 +1,149 @@
-using Printf
-using CSV
-using DataFrames
+using Printf   # Для форматированного вывода в терминал
+using CSV      # Для сохранения данных в формате CSV
+using DataFrames # Для работы с табличными данными
 
-# Проверяет, является ли число n простым.
-function is_prime(n::Integer)::Bool
-n < 2 && return false
-n == 2 && return true
-iseven(n) && return false
-for i in 3:isqrt(n)+1
-n % i == 0 && return false
-end
-return true
-end
+# Функция разбивает число N на m частей максимально близких по длине
 
-# Генерирует список всех простых чисел в диапазоне [start, stop].
-function generate_primes(start::Integer, stop::Integer)::Vector{Int}
-primes = Int[]
-for n in max(2, start):stop
-if is_prime(n)
-push!(primes, n)
-end
-end
-return primes
-end
+function split_number(N::Integer, m::Integer)
+s = string(N) # Преобразуем число в строку для удобства разбиения
+len = length(s) # Длина числа (количество цифр)
+base_len = div(len, m) # Базовая длина каждой части
+remainder = len % m # Остаток от деления — показывает, сколько частей будет длиннее на 1 символ
 
-# Разбивает число N на m частей равной длины.
-# Если длина N не делится на m, части будут максимально близкими по длине.
-function split_number(N::Integer, m::Integer)::Vector{Int}
-s = string(N)
-d = length(s)
-
-if m <= 0
-error("Число частей должно быть положительным")
-end
-l = div(d, m)
-rem = d % m
-parts = Int[]
-idx = 1
+parts = String[] # Массив для хранения частей числа
+idx = 1 # Текущая позиция в строке
 
 for i in 1:m
-current_length = l + (i <= rem ? 1 : 0)
-part = parse(Int, s[idx:idx+current_length-1])
-push!(parts, part)
-idx += current_length
-end
-return parts
+current_len = base_len + (i <= remainder ? 1 : 0)  # Длина текущей части
+push!(parts, s[idx:idx+current_len-1]) # Добавляем часть строки в массив
+idx += current_len # Перемещаем указатель
 end
 
-# Определяет тип совпадения между PQ и N*k.
-# Теперь возвращает универсальные категории для статистики.
-function classify_match(pq::Integer, product::Integer)::String
-pq_str = string(pq)
-prod_str = string(product)
+return [parse(BigInt, p) for p in parts] # Возвращаем массив BigInt
+end
 
-# Полное совпадение
-if pq == product
+# Сравнивает PQ и N*k и определяет тип совпадения
+function compare_pq_nk(pq::String, nk::String)
+if pq == nk
 return "✅ Полное совпадение"
-end
-
-# Масштабированное совпадение (в 10^n раз)
-for n in 1:5
-if pq == product * 10^n
-return "🔄 Совпадение в $n раз(а)"
-end
-end
-
-# Совпадает начало?
-min_len = min(length(pq_str), length(prod_str))
-for i in 1:min_len
-if pq_str[1:i] != prod_str[1:i]
-break
-end
-if i == min_len || prod_str[i+1] != pq_str[i+1]
-return "🔄 Совпадают начальные цифры"
-end
-end
-
-# Совпадает конец?
-for i in 1:min_len
-pos_pq = length(pq_str) - i + 1
-pos_prod = length(prod_str) - i + 1
-if pq_str[pos_pq:end] == prod_str[pos_prod:end]
-return "🔄 Совпадают последние цифры"
-end
-end
-
-# Нет совпадений
+elseif startswith(nk, first(pq)) && endswith(nk, last(pq))
+return "🔄 Совпадают начало и конец"
+elseif startswith(nk, first(pq))
+return "🔄 Совпадает начало"
+elseif endswith(nk, last(pq))
+return "🔄 Совпадает конец"
+else
 return "❌ Нет совпадений"
 end
-
-# Проверяет, выполняется ли гипотеза структурной числовой симметрии для числа N.
-function check_symmetry(N::Integer, k::Integer, m::Integer)::Tuple{Bool,String}
-s = string(N)
-d = length(s)
-
-# Если невозможно разбить на m частей хотя бы по одной цифре
-if d < m
-return false, "⚠️ Ошибка: слишком мало цифр для разбиения на $m частей"
 end
 
-try
-parts = split_number(N, m)
-q_parts = [part * k for part in parts]
-pq = parse(BigInt, join(string.(q_parts)))
-product = N * k
-result = classify_match(pq, product)
-return true, result
-catch e
-return false, "⚠️ Ошибка: $(sprint(showerror, e))"
-end
-end
+# Проверяет гипотезу для одного числа N
+function check_hypothesis(N::Integer, m::Integer, k::Integer)
+N_str = string(N) # Число N как строка
+nk = string(N * k) # Умноженное число как строка
 
-# Запускает проверку гипотезы для всех чисел от start до stop.
-function run_check_range(start::Integer, stop::Integer, k::Integer, m::Integer)
-println("🔍 Проверка чисел от $start до $stop, k = $k, m = $m:")
-println("-"^60)
+parts = split_number(N, m) # Разбиваем N на m частей
+pq_parts = [string(p * k) for p in parts] # Умножаем каждую часть и преобразуем в строку
+pq = join(pq_parts) # Объединяем результаты в одно число PQ
 
-stats = Dict(
-"✅ Полное совпадение" => 0,
-"🔄 Совпадение в 1 раз" => 0,
-"🔄 Совпадение в 2 раза" => 0,
-"🔄 Совпадение в 3 раза" => 0,
-"🔄 Совпадение в 4 раза" => 0,
-"🔄 Совпадение в 5 раз" => 0,
-"🔄 Совпадают начальные цифры" => 0,
-"🔄 Совпадают последние цифры" => 0,
-"❌ Нет совпадений" => 0,
-"⚠️ Ошибки" => 0
-    )
+result = compare_pq_nk(pq, nk) # Сравниваем PQ и N*k
 
-for N in start:stop
-success, result = check_symmetry(N, k, m)
-
-if !success
-stats["⚠️ Ошибки"] += 1
-continue
+return (
+N = N,
+m = m,
+k = k,
+parts = string(parts),
+multiplied_parts = string([p * k for p in parts]),
+PQ = pq,
+NK = nk,
+result = result
+)
 end
 
-stats[result] += 1
+# Запускает проверку гипотезы для диапазона чисел
 
-if verbose
-@printf "N = %8d → %s\n" N result
-end
-end
+function run_tests(start_N::Integer, stop_N::Integer, m::Integer, k::Integer)
 
-println("\n📊 Статистика совпадений:")
-for (key, value) in sort(collect(stats), by = x -> -x[2])
-println("  $key: $value")
-end
-end
+# Создаём DataFrame для хранения результатов
 
-# Запускает проверку гипотезы только для **простых чисел** от start до stop.
-function run_check_primes(start::Integer, stop::Integer, k::Integer, m::Integer)
-println("🔍 Проверка ПРОСТЫХ чисел от $start до $stop, k = $k, m = $m:")
-println("-"^60)
+results_df = DataFrame(
+N = BigInt[],
+m = Int[],
+k = Int[],
+parts = String[],
+multiplied_parts = String[],
+PQ = String[],
+NK = String[],
+result = String[]
+)
 
-primes = generate_primes(start, stop)
-isempty(primes) && return println("🚫 Простых чисел в этом диапазоне нет.")
+# Счётчики для статистики
 
-stats = Dict(
-"✅ Полное совпадение" => 0,
-"🔄 Совпадение в 1 раз" => 0,
-"🔄 Совпадение в 2 раза" => 0,
-"🔄 Совпадение в 3 раза" => 0,
-"🔄 Совпадение в 4 раза" => 0,
-"🔄 Совпадение в 5 раз" => 0,
-"🔄 Совпадают начальные цифры" => 0,
-"🔄 Совпадают последние цифры" => 0,
-"❌ Нет совпадений" => 0,
-"⚠️ Ошибки" => 0
-    )
+count_full = 0
+count_partial_start = 0
+count_partial_end = 0
+count_partial_both = 0
+count_none = 0
 
-for N in primes
-success, result = check_symmetry(N, k, m)
+@printf("\n🚀 Запуск проверки гипотезы\n")
+@printf("Диапазон: [%d, %d], m = %d, k = %d\n", start_N, stop_N, m, k)
 
-if !success
-stats["⚠️ Ошибки"] += 1
-continue
-end
+for N in start_N:stop_N
 
-stats[result] += 1
-@printf "N = %8d → %s\n" N result
-end
+print("\r🔍 Проверка N = $N...")  # Отображаем прогресс в одной строке
 
-println("\n📊 Статистика совпадений (для простых чисел):")
-for (key, value) in sort(collect(stats), by = x -> -x[2])
-println("  $key: $value")
+res = check_hypothesis(N, m, k)  # Проверяем гипотезу для конкретного N
+
+# Добавляем результат в таблицу
+        
+push!(results_df, [
+res.N
+res.m
+res.k
+res.parts
+res.multiplied_parts
+res.PQ
+res.NK
+res.result
+])
+
+# Обновляем счётчики
+
+if res.result == "✅ Полное совпадение"
+count_full += 1
+elseif res.result == "🔄 Совпадают начало и конец"
+count_partial_both += 1
+elseif res.result == "🔄 Совпадает начало"
+count_partial_start += 1
+elseif res.result == "🔄 Совпадает конец"
+count_partial_end += 1
+else
+count_none += 1
 end
 end
 
-# Запускает проверку гипотезы для всех чисел от start до stop.
-# Сохраняет результаты в CSV-файл.
-function run_check_range_to_file(start::Integer, stop::Integer, k::Integer, m::Integer, filename::String = "results.csv", verbose::Bool = true)
-if verbose
-println("🔍 Проверка чисел от $start до $stop, k = $k, m = $m:")
-println("-"^60)
+println("\n💾 Сохраняю результаты в CSV...")
+CSV.write("results.csv", results_df)  # Сохраняем в файл CSV
+
+# Выводим статистику
+
+println("\n📊 Статистика:")
+@printf("  ✅ Полных совпадений: %d\n", count_full)
+@printf("  🔄 Совпадает начало: %d\n", count_partial_start)
+@printf("  🔄 Совпадает конец: %d\n", count_partial_end)
+@printf("  🔄 Совпадают начало и конец: %d\n", count_partial_both)
+@printf("  ❌ Без совпадений: %d\n", count_none)
+
+println("\n📄 Результаты сохранены в 'results.csv'")
+return results_df
 end
 
-stats = Dict(
-"✅ Полное совпадение" => 0,
-"🔄 Совпадение в 1 раз" => 0,
-"🔄 Совпадение в 2 раза" => 0,
-"🔄 Совпадение в 3 раза" => 0,
-"🔄 Совпадение в 4 раза" => 0,
-"🔄 Совпадение в 5 раз" => 0,
-"🔄 Совпадают начальные цифры" => 0,
-"🔄 Совпадают последние цифры" => 0,
-"❌ Нет совпадений" => 0,
-"⚠️ Ошибки" => 0
-    )
+# Пользовательские параметры
 
-df = DataFrame(N=Int[], k=Int[], m=Int[], PQ=String[], product=String[], result=String[])
+start_N = 10  # начальное значение N
+stop_N = 100 # конечное значение N
+m = 2 # количество частей
+k = 7 # множитель
 
-for N in start:stop
-s = string(N)
-d = length(s)
-
-# Пропускаем числа, которые нельзя разбить на m частей
-if d < m
-error_msg = "⚠️ Ошибка: слишком мало цифр для разбиения на $m частей"
-push!(df, [N, k, m, "", "", error_msg])
-stats["⚠️ Ошибки"] += 1
-continue
-end
-
-success, result = check_symmetry(N, k, m)
-
-if !success
-stats["⚠️ Ошибки"] += 1
-push!(df, [N, k, m, "", "", result])
-continue
-end
-
-parts = split_number(N, m)
-q_parts = [part * k for part in parts]
-pq = join(string.(q_parts))
-product = string(N * k)
-
-push!(df, [N, k, m, pq, product, result])
-
-stats[result] += 1
-
-if verbose
-@printf "N = %8d → %s\n" N result
-end
-end
-
-# Сохраняем в CSV
-CSV.write(filename, df)
-
-if verbose
-println("\n💾 Результаты сохранены в файл: $filename")
-println("\n📊 Статистика совпадений:")
-for (key, value) in sort(collect(stats), by = x -> -x[2])
-println("  $key: $value")
-end
-end
-end
-
-# 🔁 Запуск примера
-start = 10
-stop =  100
-k = 7
-m = 2
-
-run_check_range_to_file(start, stop, k, m, "results.csv", true)
+# Запуск программы
+run_tests(start_N, stop_N, m, k)
