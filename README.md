@@ -8,19 +8,20 @@ Author: Mikhail Yuryevich Yushchenko
 
 Date: May 4, 2025
 
-## Article Title: Hypothesis of Structural Numerical Symmetry: Investigating Integer Properties under Symmetric Partitioning and Partial Multiplication
+## Hypothesis of Structural Numerical Symmetry: A Study of Integer Properties Under Symmetric Partitioning and Partial Multiplication.
 
 ## Abstract
 
-This work presents a new pattern in number theory — the Hypothesis of Structural Numerical Symmetry , discovered by me on May 4, 2025. The essence of this hypothesis is as follows:
+This paper presents a new pattern in number theory — the hypothesis of structural numerical symmetry , discovered by me on May 4, 2025. The essence of it is as follows:
 
-For any integer N≥10, if it is divided into m parts that are as close as possible in length, each part is multiplied by the same natural number k, and then the results are concatenated to form a decimal number PQ, then:
+In the decimal numeral system, for any integer N≥10, if it is split into m≥2 natural parts that are as equal in length as possible (so that the lengths of all parts differ by at most one digit), where m∈N but does not exceed the length of the number N, and each part is then multiplied by the same natural number k, and the results are 
+concatenated to form a new decimal number PQ, then:
 
-Full match may occur: PQ = N * k
+There may be a complete match: PQ=N×k
 
-In most cases, both the leading and trailing digits match, although the numbers may differ in total digit count.
+Either the beginning or the end can match, even if the numbers PQ and N×k have different lengths.
 
-In some cases, only partial symmetry occurs: either the beginning or the end of PQ matches N×k
+There may be partial symmetry: only the beginning or the end matches.
 
 Even prime numbers can yield an exact match under specific partitioning and multiplier conditions.
 
@@ -28,32 +29,34 @@ Question: Is there any number N for which none of these rules apply?
 
 ## Clarification of the formulation:
 
-N≥10: This is the minimum length required to allow meaningful symmetric partitioning
+N≥10 — this is the minimum length that allows actual symmetric partitioning
 
-Partitioning into m parts : Should be as equal in length as possible across the number N
+Partitioning into m parts — must be as equal in length as possible
 
-Each part is multiplied by k
+Multiplying each part by a natural number k
 
-Concatenation as a decimal number PQ: This is the key operation that gives structure
+Concatenating the results as a decimal number PQ — key operation that gives structure
 
-Possible types of match:
+Matches can be:
 
-Exact
+Complete
 
-Partial (start or end)
+Partial (beginning or end)
 
-Scaled (e.g., differing by powers of ten)
+Scaled (e.g., they differ by a factor of 10 or more)
 
 ### The paper includes both theoretical analysis and a programmatic implementation in Julia, enabling automated verification of the hypothesis across arbitrary ranges. 
 
-Research directions for future exploration are also proposed.
+The work includes both theoretical analysis and a software implementation in the Julia programming language, which allows automatic verification of the hypothesis across any range of numbers. Directions for further research are also proposed.
 
 ## Chapter 1. Introduction
 
 ### 1.1 Origin of the Idea:
+
 The research began with an attempt to manually compute 999^9999. This number was too large for direct analysis, prompting an alternative approach — breaking it into segments and applying partial multiplication. Although this method initially produced numerous errors, continued experimentation led to the discovery of this unique hypothesis.
 
 ### 1.2 Research Objective:
+
 The main goal was to investigate what can be formulated as the Hypothesis of Structural Numerical Symmetry , including:
 
 Understanding under what conditions exact or partial matching occurs
@@ -67,17 +70,19 @@ Testing applicability to prime numbers
 ## Chapter 2. Hypothesis Formulation
 
 ### 2.1 Structural Numerical Symmetry Hypothesis (SNS)
-For any integer N≥10, if it is divided into m parts as close in length as possible, each part is multiplied by the same natural number k, and the results are concatenated as a decimal number PQ, then:
 
-Exact match is possible: PQ = N * k
+In the decimal numeral system, for any integer N≥10, if it is split into m≥2 natural parts that are as equal in length as possible (so that the lengths of all parts differ by at most one digit), where m∈N but does not exceed the length of the number N, and each part is then multiplied by the same natural number k, and the results are 
+concatenated to form a new decimal number PQ, then:
 
-In most cases, partial symmetry is observed: either the beginning or the end of PQ matches N * k
+There may be a complete match: PQ=N×k
 
-In some cases, both the start and end digits may match, even if the total digit lengths differ
+Either the beginning or the end can match, even if the numbers PQ and N×k have different lengths.
 
-Even prime numbers can yield an exact match under specific partitioning and multiplier conditions
+There may be partial symmetry: only the beginning or the end matches.
 
-Open Question: Is there any number N for which none of these rules hold?
+Even prime numbers can yield an exact match under specific partitioning and multiplier conditions.
+
+Question: Is there any number N for which none of these rules apply?
 
 ## Chapter 3. Theoretical Analysis
 
@@ -89,6 +94,7 @@ Formal condition:
 ∀i, length(Ai * k) = length(Ai) ⇒ PQ = N * k
 
 ### 3.2 Dependence on Multiplier k
+
 Observations:
 
 At k=1: Structure remains unchanged → always exact match
